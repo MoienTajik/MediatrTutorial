@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FluentValidation.AspNetCore;
 using MediatR;
 using MediatrTutorial.Data;
 using Microsoft.AspNetCore.Builder;
@@ -24,7 +25,9 @@ namespace MediatrTutorial
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc()
+                .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Startup>());
+
             services.AddMediatR();
             services.AddAutoMapper();
             services.AddDbContext<ApplicationDbContext>(opt =>
