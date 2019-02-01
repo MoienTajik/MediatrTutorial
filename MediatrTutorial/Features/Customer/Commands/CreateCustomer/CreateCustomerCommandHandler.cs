@@ -2,6 +2,7 @@
 using MediatR;
 using MediatrTutorial.Data;
 using MediatrTutorial.Dto;
+using MediatrTutorial.Features.Customer.Events.CustomerCreated;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,11 +12,15 @@ namespace MediatrTutorial.Features.Customer.Commands.CreateCustomer
     {
         readonly ApplicationDbContext _context;
         readonly IMapper _mapper;
+        readonly IMediator _mediator;
 
-        public CreateCustomerCommandHandler(ApplicationDbContext context, IMapper mapper)
+        public CreateCustomerCommandHandler(ApplicationDbContext context,
+            IMapper mapper,
+            IMediator mediator)
         {
             _context = context;
             _mapper = mapper;
+            _mediator = mediator;
         }
 
         public async Task<CustomerDto> Handle(CreateCustomerCommand createCustomerCommand, CancellationToken cancellationToken)
@@ -24,6 +29,9 @@ namespace MediatrTutorial.Features.Customer.Commands.CreateCustomer
 
             await _context.Customers.AddAsync(customer, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
+
+            // Raising Event ...
+            await _mediator.Publish(new CustomerCreatedEvent(customer.FirstName, customer.LastName, customer.RegistrationDate), cancellationToken);
 
             return _mapper.Map<CustomerDto>(customer);
         }
