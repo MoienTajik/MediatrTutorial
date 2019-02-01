@@ -8,5 +8,6 @@ A complete implementation of CQRS in ASP.NET Core using amazing [MediatR](https:
 * [MediatR](https://github.com/jbogard/MediatR) - Mediator implementation in .NET
 * [AutoMapper](https://github.com/AutoMapper/AutoMapper) - Convention-based object-object mapper in .NET
 * [Swashbuckle.AspNetCore](https://github.com/domaindrivendev/Swashbuckle.AspNetCore) - Swagger tooling for API's built with ASP.NET Core
+* [FluentValidation](https://github.com/JeremySkinner/FluentValidation) - A validation library for .NET that uses fluent interfaces for building validation rules.
 
 \* This repository will be updated continuously.
