@@ -2,15 +2,12 @@
 using FluentValidation.AspNetCore;
 using MediatR;
 using MediatrTutorial.Data;
+using MediatrTutorial.Infrastructure.Behaviours;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Swashbuckle.AspNetCore.Swagger;
-using System;
-using System.IO;
-using System.Reflection;
 
 namespace MediatrTutorial
 {
@@ -29,19 +26,12 @@ namespace MediatrTutorial
                 .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Startup>());
 
             services.AddMediatR();
+            services.AddSwagger();
             services.AddAutoMapper();
             services.AddDbContext<ApplicationDbContext>(opt =>
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddSwaggerGen(c =>
-            {
-                c.CustomSchemaIds(x => x.FullName);
-                c.SwaggerDoc("v1", new Info { Title = "MediatR Tutorial", Version = "v1" });
-
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
-            });
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
