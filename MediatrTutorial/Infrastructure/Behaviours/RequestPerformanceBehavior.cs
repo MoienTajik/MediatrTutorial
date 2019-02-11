@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace MediatrTutorial.Infrastructure.Behaviours
 {
-    public class RequestPerformanceBehaviour<TRequest, TResponse> :
+    public class RequestPerformanceBehavior<TRequest, TResponse> :
         IPipelineBehavior<TRequest, TResponse>
     {
-        private readonly ILogger<RequestPerformanceBehaviour<TRequest, TResponse>> _logger;
+        private readonly ILogger<RequestPerformanceBehavior<TRequest, TResponse>> _logger;
 
-        public RequestPerformanceBehaviour(ILogger<RequestPerformanceBehaviour<TRequest, TResponse>> logger)
+        public RequestPerformanceBehavior(ILogger<RequestPerformanceBehavior<TRequest, TResponse>> logger)
         {
             _logger = logger;
         }
