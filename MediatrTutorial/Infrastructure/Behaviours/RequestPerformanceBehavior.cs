@@ -26,7 +26,7 @@ namespace MediatrTutorial.Infrastructure.Behaviours
 
             stopwatch.Stop();
 
-            if (stopwatch.ElapsedMilliseconds > TimeSpan.FromSeconds(5).Milliseconds)
+            if (stopwatch.ElapsedMilliseconds > TimeSpan.FromSeconds(5).TotalMilliseconds)
             {
                 // This method has taken a long time, So we log that to check it later.
                 _logger.LogWarning($"{request} has taken {stopwatch.ElapsedMilliseconds} to run completely !");
