@@ -5,6 +5,7 @@ using MediatrTutorial.Features.Customer.Queries.GetCustomerById;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
+[assembly: ApiConventionType(typeof(DefaultApiConventions))]
 namespace MediatrTutorial.Features.Customer
 {
     [ApiController]
