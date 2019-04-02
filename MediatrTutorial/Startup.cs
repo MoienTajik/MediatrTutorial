@@ -7,20 +7,12 @@ using MediatrTutorial.Infrastructure.Behaviours;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MediatrTutorial
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
-        IConfiguration Configuration { get; }
-
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc()
@@ -30,7 +22,7 @@ namespace MediatrTutorial
             services.AddSwagger();
             services.AddAutoMapper();
             services.AddDbContext<ApplicationDbContext>(opt =>
-                opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                opt.UseInMemoryDatabase("MediatorDB"));
 
             services.AddSingleton<IEventStoreDbContext, EventStoreDbContext>();
 
@@ -44,12 +36,6 @@ namespace MediatrTutorial
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
-
-            using (IServiceScope serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                ApplicationDbContext context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
-                context.Database.Migrate();
             }
 
             app.UseSwagger();
