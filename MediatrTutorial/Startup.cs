@@ -4,9 +4,11 @@ using MediatR;
 using MediatrTutorial.Data;
 using MediatrTutorial.Data.EventStore;
 using MediatrTutorial.Infrastructure.Behaviours;
+using MediatrTutorial.Infrastructure.Mapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MediatrTutorial
@@ -15,12 +17,12 @@ namespace MediatrTutorial
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
+            services.AddControllers()
                 .AddFluentValidation(cfg => cfg.RegisterValidatorsFromAssemblyContaining<Startup>());
 
-            services.AddMediatR();
+            services.AddMediatR(typeof(Startup).Assembly);
             services.AddSwagger();
-            services.AddAutoMapper();
+            services.AddAutoMapper(typeof(DomainProfile).Assembly);
             services.AddDbContext<ApplicationDbContext>(opt =>
                 opt.UseInMemoryDatabase("MediatorDB"));
 
@@ -31,12 +33,15 @@ namespace MediatrTutorial
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehavior<,>));
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseErrorHandling();
+            app.UseRouting();
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -45,8 +50,10 @@ namespace MediatrTutorial
                 c.RoutePrefix = string.Empty;
             });
 
-            app.UseErrorHandling();
-            app.UseMvc();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }
