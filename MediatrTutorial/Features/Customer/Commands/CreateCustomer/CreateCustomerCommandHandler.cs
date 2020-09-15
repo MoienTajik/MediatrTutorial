@@ -10,9 +10,9 @@ namespace MediatrTutorial.Features.Customer.Commands.CreateCustomer
 {
     public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, CustomerDto>
     {
-        readonly ApplicationDbContext _context;
-        readonly IMapper _mapper;
-        readonly IMediator _mediator;
+        private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
+        private readonly IMediator _mediator;
 
         public CreateCustomerCommandHandler(ApplicationDbContext context,
             IMapper mapper,

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
 
 namespace MediatrTutorial
 {
@@ -11,7 +12,7 @@ namespace MediatrTutorial
             await CreateHostBuilder(args).Build().RunAsync();
         }
 
-        static IHostBuilder CreateHostBuilder(string[] args) =>
+        private static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

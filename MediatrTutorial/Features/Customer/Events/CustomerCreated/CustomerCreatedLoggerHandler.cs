@@ -7,7 +7,7 @@ namespace MediatrTutorial.Features.Customer.Events.CustomerCreated
 {
     public class CustomerCreatedLoggerHandler : INotificationHandler<CustomerCreatedEvent>
     {
-        readonly ILogger<CustomerCreatedLoggerHandler> _logger;
+        private readonly ILogger<CustomerCreatedLoggerHandler> _logger;
 
         public CustomerCreatedLoggerHandler(ILogger<CustomerCreatedLoggerHandler> logger)
         {

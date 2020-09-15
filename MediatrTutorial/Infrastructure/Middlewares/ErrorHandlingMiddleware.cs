@@ -10,8 +10,8 @@ namespace MediatrTutorial.Infrastructure.Middlewares
 {
     public class ErrorHandlingMiddleware
     {
-        readonly RequestDelegate _next;
-        static ILogger<ErrorHandlingMiddleware> _logger;
+        private readonly RequestDelegate _next;
+        private static ILogger<ErrorHandlingMiddleware> _logger;
 
         public ErrorHandlingMiddleware(RequestDelegate next,
             ILogger<ErrorHandlingMiddleware> logger)

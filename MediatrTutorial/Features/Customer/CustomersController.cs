@@ -12,7 +12,7 @@ namespace MediatrTutorial.Features.Customer
     [Route("api/[controller]")]
     public class CustomersController : ControllerBase
     {
-        readonly IMediator _mediator;
+        private readonly IMediator _mediator;
 
         public CustomersController(IMediator mediator)
         {

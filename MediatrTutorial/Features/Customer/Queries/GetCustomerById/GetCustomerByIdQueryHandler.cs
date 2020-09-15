@@ -11,8 +11,8 @@ namespace MediatrTutorial.Features.Customer.Queries.GetCustomerById
 {
     public class GetCustomerByIdQueryHandler : IRequestHandler<GetCustomerByIdQuery, CustomerDto>
     {
-        readonly ApplicationDbContext _context;
-        readonly IMapper _mapper;
+        private readonly ApplicationDbContext _context;
+        private readonly IMapper _mapper;
 
         public GetCustomerByIdQueryHandler(ApplicationDbContext context, IMapper mapper)
         {

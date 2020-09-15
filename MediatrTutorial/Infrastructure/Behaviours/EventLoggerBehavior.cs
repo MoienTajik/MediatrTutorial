@@ -13,7 +13,7 @@ namespace MediatrTutorial.Infrastructure.Behaviours
     public class EventLoggerBehavior<TRequest, TResponse> :
        IPipelineBehavior<TRequest, TResponse>
     {
-        readonly IEventStoreDbContext _eventStoreDbContext;
+        private readonly IEventStoreDbContext _eventStoreDbContext;
 
         public EventLoggerBehavior(IEventStoreDbContext eventStoreDbContext)
         {
