@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore;
-using Microsoft.AspNetCore.Hosting;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using System.Threading.Tasks;
 
 namespace MediatrTutorial
 {
-    public class Program
+    public static class Program
     {
         public static async Task Main(string[] args)
         {

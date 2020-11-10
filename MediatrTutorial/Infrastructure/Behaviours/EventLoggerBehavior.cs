@@ -10,8 +10,9 @@ using System.Threading.Tasks;
 
 namespace MediatrTutorial.Infrastructure.Behaviours
 {
-    public class EventLoggerBehavior<TRequest, TResponse> :
-       IPipelineBehavior<TRequest, TResponse>
+    public class EventLoggerBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : notnull
+        where TResponse : notnull
     {
         private readonly IEventStoreDbContext _eventStoreDbContext;
 
@@ -24,10 +25,10 @@ namespace MediatrTutorial.Infrastructure.Behaviours
         {
             TResponse response = await next();
 
-            string requestName = request.ToString();
+            var requestName = request.ToString();
 
             // Commands convention
-            if (requestName.EndsWith("Command"))
+            if (requestName is not null && requestName.EndsWith("Command"))
             {
                 Type requestType = request.GetType();
                 string commandName = requestType.Name;

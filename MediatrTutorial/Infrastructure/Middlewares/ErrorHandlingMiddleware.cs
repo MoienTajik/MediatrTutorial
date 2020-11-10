@@ -11,7 +11,7 @@ namespace MediatrTutorial.Infrastructure.Middlewares
     public class ErrorHandlingMiddleware
     {
         private readonly RequestDelegate _next;
-        private static ILogger<ErrorHandlingMiddleware> _logger;
+        private readonly ILogger<ErrorHandlingMiddleware> _logger;
 
         public ErrorHandlingMiddleware(RequestDelegate next,
             ILogger<ErrorHandlingMiddleware> logger)
@@ -32,18 +32,16 @@ namespace MediatrTutorial.Infrastructure.Middlewares
             }
         }
 
-        static async Task HandleExceptionAsync(
-             HttpContext context,
-             Exception exception)
+        private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
             int statusCode;
-            object errors = null;
+            object? errors = default;
 
             if (exception is RestException re)
             {
                 statusCode = (int)re.Code;
 
-                if (re.Message != null & re.Message is string)
+                if (re.Message is string)
                 {
                     errors = new[] { re.Message };
                 }
@@ -51,10 +49,10 @@ namespace MediatrTutorial.Infrastructure.Middlewares
             else
             {
                 statusCode = (int)HttpStatusCode.InternalServerError;
-                errors = "An internal server error has occured.";
+                errors = "An internal server error has occurred.";
             }
 
-            _logger.LogError($"{errors} - {exception.Source} - {exception.Message} - {exception.StackTrace} - {exception.TargetSite.Name}");
+            _logger.LogError($"{errors} - {exception.Source} - {exception.Message} - {exception.StackTrace} - {exception.TargetSite?.Name}");
 
             context.Response.StatusCode = statusCode;
             context.Response.ContentType = "application/json";

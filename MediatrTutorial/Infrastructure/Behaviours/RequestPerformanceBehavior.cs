@@ -9,6 +9,8 @@ namespace MediatrTutorial.Infrastructure.Behaviours
 {
     public class RequestPerformanceBehavior<TRequest, TResponse> :
         IPipelineBehavior<TRequest, TResponse>
+        where TRequest : notnull
+        where TResponse : notnull
     {
         private readonly ILogger<RequestPerformanceBehavior<TRequest, TResponse>> _logger;
 

@@ -5,7 +5,7 @@ namespace MediatrTutorial.Infrastructure.Exceptions
 {
     public class RestException : Exception
     {
-        public RestException(HttpStatusCode code, object message = null)
+        public RestException(HttpStatusCode code, object message = default!)
         {
             Code = code;
             Message = message;

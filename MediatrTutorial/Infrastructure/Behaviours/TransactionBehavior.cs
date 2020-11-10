@@ -7,6 +7,8 @@ namespace MediatrTutorial.Infrastructure.Behaviours
 {
     public class TransactionBehavior<TRequest, TResponse> :
         IPipelineBehavior<TRequest, TResponse>
+        where TRequest : notnull
+        where TResponse : notnull
     {
         public async Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
@@ -16,15 +18,12 @@ namespace MediatrTutorial.Infrastructure.Behaviours
                 Timeout = TransactionManager.MaximumTimeout
             };
 
-            using (var transaction = new TransactionScope(TransactionScopeOption.Required, transactionOptions,
-                TransactionScopeAsyncFlowOption.Enabled))
-            {
-                TResponse response = await next();
+            using var transaction = new TransactionScope(TransactionScopeOption.Required, transactionOptions, TransactionScopeAsyncFlowOption.Enabled);
+            TResponse response = await next();
 
-                transaction.Complete();
+            transaction.Complete();
 
-                return response;
-            }
+            return response;
         }
     }
 }
