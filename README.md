@@ -1,6 +1,6 @@
 ## CQRS in ASP.NET Core using MediatR
 
-A simple implementation of CQRS in ASP.NET Core using amazing [MediatR](https://github.com/jbogard/MediatR) framework in .NET 5
+A simple implementation of CQRS in ASP.NET Core using [MediatR](https://github.com/jbogard/MediatR) framework in .NET 5
 
 ## Built With
 * [ASP.NET Core](https://docs.microsoft.com/en-us/aspnet/core) - Web Framework
